@@ -13,5 +13,6 @@ urlpatterns = [
     path('blogs/<int:number>/delete', views.destroy),
     path('blogs/json', views.jsonf),
     path('home', views.home),
+    path('time_display', views.displayTimeDate),
 
 ]

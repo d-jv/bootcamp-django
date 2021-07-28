@@ -16,18 +16,23 @@
             crossorigin="anonymous"
         ></script>
         {% load static %}
-        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+        <link rel="stylesheet" href="{% static 'style.css' %}" />
         <title>Document</title>
     </head>
     <body>
-        <div class="container-fluid bg-dark">
-            <h1 class="text-white text-center">Hello there, {{name}}!</h1>
-            <div class="row text-center">
-                {% for image in images %}
-                <div class="col-6 p-2">
-                    <img src="{{image}}" class="rounded shadow mx-auto img-fluid" />
+        <div class="container-fluid bg-secondary">
+            <div class="container vh-100 text-white">
+                <div class="row">
+                    <div class="col-4 mx-auto border rounded mt-5">
+                        <p class="text-center fw-bold">The current time and date:</p>
+                    </div>
                 </div>
-                {% endfor %}
+                <div class="row text-center">
+                    <div class="col-8 mx-auto border rounded mt-2 p-2">
+                        <h1>{{day}}</h1>
+                        <h1>{{time}}</h1>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

@@ -1,5 +1,6 @@
 from django.http.response import JsonResponse
 from django.shortcuts import render, HttpResponse, redirect
+from time import gmtime, strftime, localtime
 
 
 def indexPrueba(request):
@@ -47,6 +48,12 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
+def displayTimeDate(request):
+    data = {
+        "day": strftime("%b %d, %Y", localtime()),
+        "time": strftime("%H:%M %p", localtime()),
+    }
+    return render(request, 'time_display.html', data)
 
 
 
