@@ -28,13 +28,19 @@
                     </div>
                 </div>
                 <div class="row text-center">
+                    {% if counter >= 10 %}
+                    <div class="fw-bold col-6 mx-auto border rounded mt-2 p-2 shadow bg-warning text-danger">
+                        <p>{{random_word}}</p>
+                    </div>
+                    {% else %}
                     <div class="col-6 mx-auto border rounded mt-2 p-2 shadow">
                         <p>{{random_word}}</p>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="row justify-content-center">
                     <input class="btn btn-outline-primary col-2 me-1 border rounded mt-2 text-center shadow" type="button" value="Generate" onclick="window.location.reload();" />
-                    <a class="btn btn-outline-danger col-2 ms-1 border rounded mt-2 text-center shadow" role="button" href="/random_word/reset">Reset</a>
+                    <a class="btn btn-outline-danger col-2 ms-1 border rounded mt-2 text-center shadow" href="/random_word/reset">Reset</a>
                 </div>
             </div>
         </div>
