@@ -39,7 +39,12 @@
                     {% endif %}
                 </div>
                 <div class="row justify-content-center">
-                    <input class="btn btn-outline-primary col-2 me-1 border rounded mt-2 text-center shadow" type="button" value="Generate" onclick="window.location.reload();" />
+                    <input
+                        class="btn btn-outline-primary col-2 me-1 border rounded mt-2 text-center shadow {%if counter >= 10%} disabled {%endif%}"
+                        type="button"
+                        value="Generate"
+                        onclick="window.location.reload();"
+                    />
                     <a class="btn btn-outline-danger col-2 ms-1 border rounded mt-2 text-center shadow" href="/random_word/reset">Reset</a>
                 </div>
             </div>
