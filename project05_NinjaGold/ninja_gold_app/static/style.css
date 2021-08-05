@@ -1,0 +1,64 @@
+/* * {
+    outline: 1px dotted red;
+} */
+.input-home {
+    width: 50%;
+    text-align: center;
+}
+#ninja-slash {
+    position: relative;
+    top: -1.5rem;
+    margin-bottom: -1.5rem;
+}
+.goldie {
+    filter: drop-shadow(0 0 0.75rem #ffd700);
+}
+#tori-bg {
+    background-image: url(https://pro2-bar-s3-cdn-cf6.myportfolio.com/d5d42754-93fe-4954-9113-27d30512fcd6/acca5074-9495-4e86-8959-a6ea130a6dfa_rw_1920.gif?h=18c578bef0017adff0555f8673b80426);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#landing-welcome {
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+}
+.card-body {
+    height: 20rem;
+    filter: drop-shadow(0 0 0.75rem black);
+}
+.card {
+    filter: drop-shadow(0 0 0.75rem black);
+}
+.neon {
+    filter: drop-shadow(0 0 0.75rem crimson);
+}
+
+#log {
+    height: 15rem;
+    backdrop-filter: blur(5px);
+}
+
+.fa-coins {
+    color: #ffd700;
+}
+.fa-exclamation-triangle {
+    color: #ffd700;
+}
+
+.img-thumbnail {
+    max-height: 50%;
+}
+
+#gold-gif {
+    background-image: url(https://acegif.com/wp-content/gifs/raining-money-26.gif);
+    filter: drop-shadow(0 0 0.75rem #ffd700);
+}
+
+#pile-gold {
+    background-image: url(https://focusgames.io/assets/default/img/raintip.gif);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    backdrop-filter: blur(5px);
+}
