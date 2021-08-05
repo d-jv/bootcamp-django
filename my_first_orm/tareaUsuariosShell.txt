@@ -1,0 +1,17 @@
+python manage.py makemigrations
+python manage.py migrate
+python manage.py shell
+from movie_app.models import *
+Users.objects.create(first_name = 'John', last_name = 'Doe', email_address = 'jhon-doe69420@vegan.com', age = 16)
+Users.objects.create(first_name = 'Lorem', last_name = 'Ipsum', email_address = 'lorem@ipsum.com', age = 666)
+Users.objects.create(first_name = 'Guido', last_name = 'van Rossum', email_address = 'guido@python.org', age = 65)
+Users.objects.all()
+Users.objects.last()
+Users.objects.last()
+idtres = Users.objects.get(id = 3)
+idtres.last_name = 'Pancakes'
+idtres.save()
+iddos = Users.objects.get(id = 2)
+iddos.delete()
+Users.objects.all().order_by("-first_name")
+Users.objects.all().values()
