@@ -73,7 +73,7 @@ def addAuthor2book(request, book_id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-def addremove(request, author_id, book_id):
+def remove(request, author_id, book_id):
     author = Author.objects.get(id=int(author_id))
     book = Book.objects.get(id=int(book_id))
     # book_id = int(request.POST['book-id'])
