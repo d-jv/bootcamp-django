@@ -1,4 +1,4 @@
-"""my_first_orm URL Configuration
+"""tv_shows URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -19,5 +19,5 @@ from django.urls.conf import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('movie_app.urls')),
+    path('', include('tvshows_app.urls')),
 ]

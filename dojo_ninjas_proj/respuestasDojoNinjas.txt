@@ -1,0 +1,37 @@
+python manage.py shell
+from dojo_ninjas_app.models import *
+Dojo.objects.create(name = 'Coding111', city = 'Chicago', state = 'Illinois')
+Dojo.objects.create(name = 'Coding222', city = 'Los Angeles', state = 'California')
+Dojo.objects.create(name = 'Coding333', city = 'Seattle', state = 'Washington')
+del1 = Dojo.objects.get(id = 1 )
+del2 = Dojo.objects.get(id = 2 )
+del3 = Dojo.objects.get(id = 3 )
+del1.delete()
+del2.delete()
+del3.delete()
+            OR 
+allDojos = Dojo.objects.all()
+allDojos.delete()
+ninja1 = Ninja.objects.create(first_name = 'Ninja1', last_name = 'Woki', dojo_id = Dojo.objects.get(id=4))
+ninja2 = Ninja.objects.create(first_name = 'Ninja2', last_name = 'Woki2', dojo_id = Dojo.objects.get(id=4))
+ninja3 = Ninja.objects.create(first_name = 'Ninja3', last_name = 'Woki3', dojo_id = Dojo.objects.get(id=4))
+ninja4 = Ninja.objects.create(first_name = 'Ninja4', last_name = 'Woki4', dojo_id = Dojo.objects.get(id=5))
+ninja5 = Ninja.objects.create(first_name = 'Ninja5', last_name = 'Woki5', dojo_id = Dojo.objects.get(id=5))
+ninja6 = Ninja.objects.create(first_name = 'Ninja6', last_name = 'Woki6', dojo_id = Dojo.objects.get(id=5))
+ninja7 = Ninja.objects.create(first_name = 'Ninja7', last_name = 'Woki7', dojo_id = Dojo.objects.get(id=6))
+ninja8 = Ninja.objects.create(first_name = 'Ninja8', last_name = 'Woki8', dojo_id = Dojo.objects.get(id=6))
+ninja9 = Ninja.objects.create(first_name = 'Ninja9', last_name = 'Woki9', dojo_id = Dojo.objects.get(id=6))
+python manage.py makemigrations
+python manage.py migrate
+python manage.py shell
+from dojo_ninjas_app.models import *
+modif1 = Dojo.objects.get(id=4)
+modif1.desc = 'dojo antiguo'
+modif1.save()
+modif2 = Dojo.objects.get(id=5)
+modif2.desc = 'dojo antiguo'
+modif2.save()
+modif3 = Dojo.objects.get(id=6)
+modif3.desc = 'dojo antiguo'
+modif3.save()
+Dojo.objects.create(name = 'Coding444', city = 'Berkeley', state= 'California', desc= 'NEW dojo')

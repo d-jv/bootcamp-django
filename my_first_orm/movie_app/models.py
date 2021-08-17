@@ -14,8 +14,9 @@ class Wizard(models.Model):
     name = models.CharField(max_length=255)
     house = models.CharField(max_length=255)
     pet = models.CharField(max_length=255)
-    year = models.IntegerField()
-    
+    position = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
 
 class Users(models.Model):
     first_name = models.CharField(max_length=255)
