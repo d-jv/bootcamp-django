@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block content %}
+<br />
+<div class="row">
+    <h1 class="ms-4">TV Show {{show.id}}</h1>
+    <div class="col ms-4">
+        <br /><br />
+        <p>Title : {{show.title}}</p>
+        <p>Network:{% for network in show.networks.all%} {{network.name}} {%endfor%}</p>
+        <p>Release Date: {{show.release_date}}</p>
+        <p>Description: {{show.desc}}</p>
+    </div>
+</div>
+<div class="row ms-2 my-5">
+    <p>Last Updated: {{show.updated_at}}</p>
+    <br />
+    <p>
+        <a class="link-info" href="{{show.id}}/edit">Edit</a>
+        |
+        <a class="link-info" href="../remove/{{show.id}}">Delete</a>
+    </p>
+</div>
+{% endblock %}
