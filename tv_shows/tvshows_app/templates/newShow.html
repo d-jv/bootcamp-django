@@ -12,7 +12,13 @@
             <div class="row align-items-center">
                 <div class="col mb-3 text-center">
                     <label for="network" class="form-label">Network</label>
-                    <input type="text" name="network" class="form-control input-index mx-auto" required />
+                    <select id="network_id" type="text" name="network_id" class="form-control input-index mx-auto" required>
+                        {% for network in networks %}
+                        <option value="{{network.id}}">{{network.name}}</option>
+                        {% endfor %}
+                        <option value="other">Other</option>
+                    </select>
+                    <input class="d-none form-control" type="text" name="newNetwork" id="newNetwork" placeholder="create new network" />
                 </div>
                 <div class="col mb-3 text-center">
                     <label for="date" class="form-label me-4">Date:</label>
@@ -21,10 +27,19 @@
             </div>
             <div class="mb-3 text-center">
                 <label for="desc" class="form-label">Description:</label>
-                <textarea class="form-control" id="desc" rows="3"></textarea>
+                <textarea type="text" class="form-control" name="desc" id="desc" rows="3"></textarea>
             </div>
             <div class="text-center"><button type="submit" class="shadow btn btn-secondary">Create</button></div>
         </form>
     </div>
 </div>
+<script>
+    $("#network_id").on("change", function () {
+        if ($(this).val() === "other") {
+            $("#newNetwork").removeClass("d-none");
+        } else {
+            $("#newNetwork").addClass("d-none");
+        }
+    });
+</script>
 {% endblock %}

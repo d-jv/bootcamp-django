@@ -14,14 +14,16 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- {% for show in shows %}
+                {% for show in shows %}
                 <tr>
                     <td>{{show.id}}</td>
                     <td>{{show.title}}</td>
-                    <td>{{show.releaseDate}}</td>
-                    <td><a class="link-info" href="books/{{book.id}}">View</a></td>
+                    <!-- <td>{{show.networks.all}}</td> -->
+                    <td>{% for network in show.networks.all%} {{network.name}} {%endfor%}</td>
+                    <td>{{show.release_date}}</td>
+                    <td><a class="link-info" href="shows/{{show.id}}">View</a> <a class="link-info" href="remove/{{show.id}}">Remove</a></td>
                 </tr>
-                {% endfor %} -->
+                {% endfor %}
             </tbody>
         </table>
     </div>

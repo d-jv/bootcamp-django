@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, HttpResponse
-
+from .models import *
 
 
 def index(request):
@@ -7,12 +7,42 @@ def index(request):
 
 def shows(request):
     data = {
-
+        'shows': Show.objects.all()
     }
     return render(request, 'shows.html', data)
 
 def newShow(request):
     data = {
-
+        'networks' : Network.objects.all()
     }
     return render(request, 'newShow.html', data)
+
+def addShow(request):
+    if request.POST['network_id'] == 'other':
+        # en este caso hay que crearla
+        new_network_name = request.POST['newNetwork']
+        network = Network.objects.create(name = new_network_name)
+    else:
+        #pescar lo que venga del network id y traer el network
+        # en este caso hay que rescatarla de la DB
+        network_id = request.POST['network_id']
+        network = Network.objects.get(id=network_id)
+    # -------
+
+    showTitle = request.POST['title']
+    showDate = request.POST['date']
+    showDesc = request.POST['desc']
+    show = Show.objects.create(title = showTitle, release_date = showDate, desc = showDesc)
+    show.networks.add(network)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+# def remove(request, show_id, network_id):
+def remove(request, show_id):
+    show = Show.objects.get(id=int(show_id))
+    # network = Network.objects.get(id=int(network_id))
+    # show_id = int(request.POST['show-id'])
+    # show = Show.objects.get(id=show_id)
+    # print(show)
+    #Network.shows.remove(show)
+    show.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
