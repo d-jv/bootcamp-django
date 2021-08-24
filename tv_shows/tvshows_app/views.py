@@ -1,5 +1,8 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import redirect, render, HttpResponse
 from .models import *
+from django.db.utils import IntegrityError
+from django.contrib import messages
 
 
 def index(request):
@@ -65,17 +68,36 @@ def remove(request, show_id):
     show.delete()
     return redirect(request.META.get('HTTP_REFERER'))
 
+def removeNetwork(request, network_id):
+    network = Network.objects.get(id=int(network_id))
+    # network = Network.objects.get(id=int(network_id))
+    # show_id = int(request.POST['show-id'])
+    # show = Show.objects.get(id=show_id)
+    # print(show)
+    #Network.shows.remove(show)
+    network.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
+
 def update(request, show_id):
-    if request.POST['network_id'] == 'other':
-        # en este caso hay que crearla
-        new_network_name = request.POST['newNetwork']
-        network = Network.objects.create(name = new_network_name)
-    else:
-        #pescar lo que venga del network id y traer el network
-        # en este caso hay que rescatarla de la DB
-        network_id = request.POST['network_id']
-        network = Network.objects.get(id=network_id)
-    # -------
+    # if request.POST['network_id'] == 'other':
+    #     # en este caso hay que crearla
+    #     new_network_name = request.POST['newNetwork']
+    #     network = Network.objects.create(name = new_network_name)
+    # else:
+    #     # en este caso hay que rescatarla de la DB
+    #     network_id = request.POST['network_id']
+    #     network = Network.objects.get(id=network_id)
+    # # -------
+    # show = Show.objects.get(id=int(show_id))
+    # showTitle = request.POST['title']
+    # showDate = request.POST['date']
+    # showDesc = request.POST['desc']
+    # show.title = showTitle
+    # show.release_date = showDate
+    # show.desc = showDesc
+    # show.networks.add(network)  ###????? mejorar esta wea
+    # show.save()
+    ##### ---------------- Metodo 2 acá abajo --------------
     show = Show.objects.get(id=int(show_id))
     showTitle = request.POST['title']
     showDate = request.POST['date']
@@ -83,6 +105,23 @@ def update(request, show_id):
     show.title = showTitle
     show.release_date = showDate
     show.desc = showDesc
-    show.networks.add(network)
+    new_network_name = request.POST['newNetwork']
+    if new_network_name == "":
+        pass
+    else:
+        # network = Network.objects.create(name = new_network_name)
+        # show.networks.add(network)
+        try:
+            if Network.objects.filter(name=new_network_name).exists():
+                print('YA EXISTE')
+                alreadyExist = Network.objects.filter(name=new_network_name)
+                print(alreadyExist)
+            else:
+                network = Network.objects.create(name = new_network_name)
+                show.networks.add(network)
+                messages.success(request, f'Show {show.title} has been updated')
+        except IntegrityError:
+            messages.error(request, 'This Network already exist')
+            return redirect(request.META.get('HTTP_REFERER'))
     show.save()
     return redirect(request.META.get('HTTP_REFERER'))

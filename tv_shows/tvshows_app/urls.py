@@ -11,6 +11,7 @@ urlpatterns = [
     path('shows/<int:show_id>/update', views.update),
     path('shows/new', views.newShow),
     path('add_show', views.addShow),
+    path('remove_network/<int:network_id>', views.removeNetwork),
     # path('remove/<int:network_id>/<int:show_id>', views.remove),
     path('remove/<int:show_id>', views.remove),
 ]

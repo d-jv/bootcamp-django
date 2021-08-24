@@ -10,20 +10,49 @@
                 <input type="text" value="{{show.title}}" name="title" class="form-control input-index mx-auto" required />
             </div>
             <div class="row align-items-center">
+                <div class="col">
+                    <p class="text-center">Add:</p>
+                    <input class="text-center mt-2 form-control" type="text" name="newNetwork" id="newNetwork" placeholder="You can add a new network to this show" />
+                    {% if messages %}
+                    <ul class="messages text-center">
+                        {% for message in messages %}
+                        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
                 <div class="col mb-3 text-center">
-                    <label for="network" class="form-label">Network</label>
-                    <select id="network_id" type="text" name="network_id" class="form-control input-index mx-auto" required>
+                    <!-- <label for="network" class="form-label">Network</label>
+                    <select id="network_id" type="text" name="network_id" class="form-control input-index selectmulti" required>
                         {% for network in show.networks.all %}
                         <option value="{{network.id}}">{{network.name}}</option>
                         {% endfor %}
-                        <option value="other">Other</option>
                     </select>
-                    <input class="d-none form-control" type="text" name="newNetwork" id="newNetwork" placeholder="create new network" />
+                    -->
+                    <p>Networks List:</p>
+                    <table class="table table-secondary my-3">
+                        <thead>
+                            <tr class="table-secondary">
+                                <th class="table-secondary" scope="col">ID</th>
+                                <th class="table-secondary" scope="col">Network</th>
+                                <th class="table-secondary" scope="col">Delete?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for network in show.networks.all %}
+                            <tr>
+                                <td>{{network.id}}</td>
+                                <td>{{network.name}}</td>
+                                <td><a class="link-info" href="../../remove_network/{{network.id}}">Remove</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col mb-3 text-center">
-                    <label for="date" class="form-label me-4">Date:</label>
-                    <input type="date" name="date" class="text-center form-control input-index mx-auto" value="{{time_str}}" required />
-                </div>
+            </div>
+            <div class="col mb-3 text-center">
+                <label for="date" class="form-label me-4">Date:</label>
+                <input type="date" name="date" class="text-center form-control input-index mx-auto" value="{{time_str}}" required />
             </div>
             <div class="mb-3 text-center">
                 <label for="desc" class="form-label">Description:</label>
@@ -33,13 +62,16 @@
         </form>
     </div>
 </div>
-<script>
-    $("#network_id").on("change", function () {
-        if ($(this).val() === "other") {
-            $("#newNetwork").removeClass("d-none");
-        } else {
-            $("#newNetwork").addClass("d-none");
-        }
+<!-- <script>
+    $(document).ready(function () {
+        $(".selectmulti").select2();
     });
-</script>
+</script> -->
 {% endblock %}
+<!-- $("#network_id").on("change", function () {
+    if ($(this).val() === "other") {
+        $("#newNetwork").removeClass("d-none");
+    } else {
+        $("#newNetwork").addClass("d-none");
+    }
+}); -->
