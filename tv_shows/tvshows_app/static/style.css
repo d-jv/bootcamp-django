@@ -1,0 +1,10 @@
+#landing-bg {
+    background-image: url(https://64.media.tumblr.com/2a2ec3b35c7b4059a122965c87a1b24d/tumblr_npc69bVQMx1uun6jmo1_1280.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.landing-welcome {
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+}

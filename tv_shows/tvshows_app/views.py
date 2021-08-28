@@ -3,11 +3,79 @@ from django.shortcuts import redirect, render, HttpResponse
 from .models import *
 from django.db.utils import IntegrityError
 from django.contrib import messages
+import bcrypt
 
 
 def index(request):
+    return redirect('/home')
+
+def home(request):
+    data = {}
+    return render(request, 'home.html', data)
+
+def login(request):
+    email = request.POST['email']
+    password = request.POST['password']
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        messages.error(request, 'Wrong user/password')
+        return redirect('/home')
+
+        # si llegamos acá, estamos seguros que al  menos el usuario SI existe
+    if  not bcrypt.checkpw(password.encode(), user.password.encode()): 
+        messages.error(request, 'Wrong user/password')
+        return redirect('/home')
+    
+        # si llegamos hasta acá, estamos seguros que es el usuario y la contraseña está correcta
+    request.session['user'] = {
+        'id': user.id,
+        # 'name': user.name,
+        'email': user.email,
+        'avatar': user.avatar
+    }
+    messages.success(request, f'Hello there! {user.email}')
     return redirect('/shows')
 
+def logout(request):
+    request.session['user'] = None
+    return redirect('/home')
+
+def create_account(request):
+    if request.method == 'GET':
+        return render(request, 'home.html')
+    else:
+        # si llega por un POST, tomar valores del formulario
+        # y crear un nuevo usuario
+        # name = request.POST['name']
+        email = request.POST['email']
+        password = request.POST['password']
+        password_check = request.POST['password_check']
+
+        # validar que el formulario esté correcto
+        errors = User.objects.basic_validator(request.POST)
+        if len(errors) > 0:
+            # en este caso, hay al menos 1 error en el formulario
+            # voy a mostrarle los errores al usuario
+            for llave, mensaje_de_error in errors.items():
+                messages.error(request, mensaje_de_error)
+        
+            return redirect('/home')
+        
+        # si llegamos hasta acá, estamos seguros que ambas coinciden
+        user = User.objects.create(
+            # name=name,
+            email=email,
+            password=bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+        )
+        request.session['user'] = {
+            'id': user.id,
+            # 'name': user.name,
+            'email': user.email,
+            'avatar': user.avatar
+        }
+        messages.success(request, 'User successfully created')
+        return redirect('/shows')
 
 
 def show(request, id):
