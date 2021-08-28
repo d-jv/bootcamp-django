@@ -24,21 +24,21 @@ def login(request):
 
         # si llegamos acá, estamos seguros que al  menos el usuario SI existe
     if  not bcrypt.checkpw(password.encode(), user.password.encode()): 
-        messages.error(request, 'Wrong user/password')
+        messages.error(request, "Wrong user/password")
         return redirect('/home')
     
         # si llegamos hasta acá, estamos seguros que es el usuario y la contraseña está correcta
     request.session['user'] = {
         'id': user.id,
-        # 'name': user.name,
+        'username': user.username,
         'email': user.email,
         'avatar': user.avatar
     }
-    messages.success(request, f'Hello there! {user.email}')
+    messages.success(request, f'Hello there! {user.username}')
     return redirect('/shows')
 
 def logout(request):
-    request.session['user'] = None
+    del request.session['user']
     return redirect('/home')
 
 def create_account(request):
@@ -47,7 +47,7 @@ def create_account(request):
     else:
         # si llega por un POST, tomar valores del formulario
         # y crear un nuevo usuario
-        # name = request.POST['name']
+        username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         password_check = request.POST['password_check']
@@ -64,13 +64,13 @@ def create_account(request):
         
         # si llegamos hasta acá, estamos seguros que ambas coinciden
         user = User.objects.create(
-            # name=name,
+            username=username,
             email=email,
             password=bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         )
         request.session['user'] = {
             'id': user.id,
-            # 'name': user.name,
+            'username': user.username,
             'email': user.email,
             'avatar': user.avatar
         }

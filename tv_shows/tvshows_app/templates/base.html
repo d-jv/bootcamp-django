@@ -26,6 +26,19 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+            integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css"
+            integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
         <title>TV Shows</title>
     </head>
     <body>
@@ -53,10 +66,18 @@
                                 <a class="nav-link ms-3" href="http://localhost:8000/shows/new">Add a new Show</a>
                             </li>
                         </ul>
-                        <form class="d-flex">
+                        <!-- <form class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                             <button class="btn btn-outline-secondary" type="submit">Search</button>
-                        </form>
+                        </form> -->
+                        <div class="d-flex">
+                            {% if 'user' in request.session %}
+                            <a class="nav-link disable">{{request.session.user.username}}</a>
+                            <a href="http://localhost:8000/logout" class="btn btn-outline-danger">Logout</a>
+                            {% else %}
+                            <a href="http://localhost:8000/home" class="btn btn-outline-primary">Login</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -64,5 +85,29 @@
             <br />
             {% endblock %}
         </div>
+        <script>
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            {% if messages %}
+                {% for message in messages %}
+                    toastr.{{message.tags }}("{{ message }}")
+                {% endfor %}
+            {% endif %}
+        </script>
     </body>
 </html>

@@ -25,7 +25,7 @@ class Network(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class User(models.Model):
-    # name = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
     alllowed = models.BooleanField(default=True)

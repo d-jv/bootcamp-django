@@ -4,21 +4,20 @@
         <h2 class="text-center">Welcome</h2>
         <form method="POST" action="/login">
             {% csrf_token %}
-            <div class="my-3 text-center">
-                <label for="email" class="form-label">Email:</label>
+            <div class="my-3 text-center input-group">
+                <label for="email" class="input-group-text">Email:</label>
                 <input type="email" name="email" class="text-center form-control input-home mx-auto" placeholder="E.g: contact@lagman.com" required />
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
+            <div class="mb-3 input-group">
+                <label for="password" class="input-group-text">Password:</label>
                 <input type="password" name="password" class="text-center form-control input-home mx-auto" placeholder="Enter your password here" required />
             </div>
-            <div class="mb-3">
-                <label for="password_check" class="form-label">Confirm Password:</label>
+            <div class="mb-3 input-group">
+                <label for="password_check" class="input-group-text">Confirm Password:</label>
                 <input type="password" name="password_check" class="text-center form-control input-home mx-auto" placeholder="Repeat password" required />
             </div>
             <div class="text-center"><button type="submit" class="btn btn-primary">LOGIN</button></div>
         </form>
-        <br />
         <p>----- or -----</p>
         <button id="create_account" class="btn btn-success">Create new account</button>
     </div>
@@ -26,24 +25,28 @@
         <h2 class="text-center">New account information:</h2>
         <form method="POST" action="/create_account">
             {% csrf_token %}
-            <div class="my-3 text-center">
-                <label for="email" class="form-label">Email:</label>
+            <div class="my-3 text-center input-group">
+                <label for="username" class="input-group-text">Username:</label>
+                <input type="text" name="username" class="text-center form-control input-home mx-auto" placeholder="E.g: contact@lagman.com" required />
+            </div>
+            <div class="my-3 text-center input-group">
+                <label for="email" class="input-group-text">Email:</label>
                 <input type="email" name="email" class="text-center form-control input-home mx-auto" placeholder="E.g: contact@lagman.com" required />
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
+            <div class="mb-3 input-group">
+                <label for="password" class="input-group-text">Password:</label>
                 <input type="password" name="password" class="text-center form-control input-home mx-auto" placeholder="Enter your password here" required />
             </div>
-            <div class="mb-3">
-                <label for="password_check" class="form-label">Confirm Password:</label>
+            <div class="mb-3 input-group">
+                <label for="password_check" class="input-group-text">Confirm Password:</label>
                 <input type="password" name="password_check" class="text-center form-control input-home mx-auto" placeholder="Repeat password" required />
             </div>
-            <div class="mb-3">
-                <label for="avatar" class="form-label">Avatar url:</label>
+            <div class="mb-3 input-group">
+                <label for="avatar" class="input-group-text">Avatar url:</label>
                 <input type="url" name="avatar" class="text-center form-control input-home mx-auto" placeholder="E.g: www.google.com/image1234.jpeg" />
             </div>
             <br />
-            <div class="text-center"><button type="submit" class="btn btn-info">Create!</button></div>
+            <div class="text-center"><button type="submit" class="btn btn-warning">Create!</button></div>
         </form>
     </div>
 </div>
