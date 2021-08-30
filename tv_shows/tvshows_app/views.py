@@ -4,6 +4,7 @@ from .models import *
 from django.db.utils import IntegrityError
 from django.contrib import messages
 import bcrypt
+from .decorators import *
 
 
 def index(request):
@@ -34,7 +35,7 @@ def login(request):
         'email': user.email,
         'avatar': user.avatar
     }
-    messages.success(request, f'Hello there! {user.username}')
+    messages.success(request, f'Hello there, {user.username}!')
     return redirect('/shows')
 
 def logout(request):
@@ -63,21 +64,26 @@ def create_account(request):
             return redirect('/home')
         
         # si llegamos hasta acá, estamos seguros que ambas coinciden
-        user = User.objects.create(
-            username=username,
-            email=email,
-            password=bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-        )
-        request.session['user'] = {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-            'avatar': user.avatar
-        }
-        messages.success(request, 'User successfully created')
-        return redirect('/shows')
+        try:
+            user = User.objects.create(
+                username=username,
+                email=email,
+                password=bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+            )
+            request.session['user'] = {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'avatar': user.avatar
+            }
+            messages.success(request, 'User successfully created')
+            messages.success(request, f'Welcome to TV shows, {user.username}.')
+            return redirect('/shows')
+        except IntegrityError:
+            messages.error(request, 'This email is already in use')
+            return redirect(request.META.get('HTTP_REFERER'))
 
-
+@login_required
 def show(request, id):
     show = Show.objects.get(id=id)
     data = {
@@ -85,6 +91,7 @@ def show(request, id):
     }
     return render(request, 'show.html', data)
 
+@login_required
 def edit(request, id):
     show = Show.objects.get(id=id)
     time_str = show.release_date.strftime('%Y-%m-%d')
@@ -94,18 +101,21 @@ def edit(request, id):
     }
     return render(request, 'edit.html', data)
 
+@login_required
 def shows(request):
     data = {
         'shows': Show.objects.all()
     }
     return render(request, 'shows.html', data)
 
+@login_required
 def newShow(request):
     data = {
         'networks' : Network.objects.all()
     }
     return render(request, 'newShow.html', data)
 
+@login_required
 def addShow(request):
     if request.POST['network_id'] == 'other':
         # en este caso hay que crearla
@@ -125,6 +135,7 @@ def addShow(request):
     show.networks.add(network)
     return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 # def remove(request, show_id, network_id):
 def remove(request, show_id):
     show = Show.objects.get(id=int(show_id))
@@ -136,6 +147,7 @@ def remove(request, show_id):
     show.delete()
     return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 def removeNetwork(request, network_id):
     network = Network.objects.get(id=int(network_id))
     # network = Network.objects.get(id=int(network_id))
@@ -146,6 +158,7 @@ def removeNetwork(request, network_id):
     network.delete()
     return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 def update(request, show_id):
     # if request.POST['network_id'] == 'other':
     #     # en este caso hay que crearla
