@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %}
+
+<form class="form" method="POST" action="/post">
+    {% csrf_token %}
+    <div class="form-input-group pt-5">
+        <div class="form-floating">
+            <textarea type="text" name="post_msg" id="post_msg" class="form-control placeholder bg-secondary" style="height: 8rem" placeholder="Post a message"></textarea>
+            <label for="post_msg">Write your message here...</label>
+        </div>
+    </div>
+    <br />
+    <div class="text-end"><button type="submit" class="btn btn-primary shadow">Post a message</button></div>
+</form>
+<div class="container-fluid mt-4">
+    <div id="" class="row border rounded" style="height: 25rem">
+        <!-- <div id="" class="col-3"></div> -->
+        <div id="wall" class="text-start fw-bold col-11 overflow-hidden p-3 font-monospace">
+            {% for post in posts %}
+            <p>
+                <span class="fw-bold text-warning">{{post.author}}</span> <br />
+                <span>{{post.message}}</span>
+            </p>
+            {% endfor %}
+        </div>
+        <!-- <div id="" class="col-3"></div> -->
+    </div>
+</div>
+{% endblock %}
