@@ -17,8 +17,10 @@
         <div id="wall" class="text-start fw-bold col-11 overflow-hidden p-3 font-monospace">
             {% for post in posts %}
             <p>
+                <img src="{{post.user.avatar}}" alt="avatar" class="img-fluid rounded-circle" style="height: 2rem" />
                 <span class="fw-bold text-warning">{{post.author}}</span> <br />
-                <span>{{post.message}}</span>
+                <span class="messages">{{post.message}}</span> <br />
+                <a href="#" class="msg-link link-info">Edit</a> <a href="#" class="link-danger">Delete</a>
             </p>
             {% endfor %}
         </div>

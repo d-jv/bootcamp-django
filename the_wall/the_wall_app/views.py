@@ -108,7 +108,8 @@ def postMsg(request):
     )
     full_msg = {
         'author': f'{user.first_name} {user.last_name} - {timeNow}',
-        'message': new_post.message
+        'message': new_post.message,
+        'user':user
     }
     posts.insert(0, full_msg)
     return redirect(request.META.get('HTTP_REFERER'))

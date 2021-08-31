@@ -8,3 +8,14 @@
     backdrop-filter: blur(20px);
     padding: 1rem;
 }
+
+.messages {
+    margin-left: 3rem;
+}
+.msg-link {
+    margin-left: 3rem;
+}
+
+.comments {
+    margin-left: 6rem;
+}
