@@ -90,11 +90,10 @@ def create_account(request):
 @login_required
 def index(request):
     data = {
-        'posts': posts
+        'posts': Message.objects.all().order_by('-create_at')
     }
     return render(request, 'index.html', data)
 
-posts = []
 @login_required
 def postMsg(request):
     post_msg = request.POST['post_msg']
@@ -102,18 +101,22 @@ def postMsg(request):
     # print(user_session['email'])
     user = User.objects.get(email=user_session['email'])
     timeNow = strftime("%b %d, %Y - %H:%M %p", localtime())
-    new_post = Message.objects.create(
+    Message.objects.create(
         message = post_msg,
         user = user
     )
-    full_msg = {
-        'author': f'{user.first_name} {user.last_name} - {timeNow}',
-        'message': new_post.message,
-        'user':user
-    }
-    posts.insert(0, full_msg)
     return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def postComment(request):
-    pass
+    post_comment = request.POST['post_comment']
+    message_id = int(request.POST['post_id'])
+    message = Message.objects.get(id=message_id)
+    user_session = request.session['user']
+    user = User.objects.get(email=user_session['email'])
+    Comment.objects.create(
+        message = message,
+        user = user,
+        comment = post_comment,
+    )
+    return redirect(request.META.get('HTTP_REFERER'))

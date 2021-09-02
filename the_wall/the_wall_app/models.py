@@ -22,12 +22,17 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     # User Manager 
     objects = UserManager()
+    def __str__(self) -> str:
+        return f'{self.id} : {self.first_name} {self.last_name}'
 
 class Message(models.Model):
     user = models.ForeignKey(User, related_name="messages", on_delete = models.CASCADE)
     message = models.TextField()
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
+    def __str__(self) -> str:
+        return f'{self.id} : ({self.user}) : {self.message}'
+
 
 class Comment(models.Model):
     message = models.ForeignKey(Message, related_name="comments", on_delete = models.CASCADE)
@@ -35,3 +40,5 @@ class Comment(models.Model):
     comment = models.TextField()
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
+    def __str__(self) -> str:
+        return f'{self.id} : ({self.user}) : {self.comment}'

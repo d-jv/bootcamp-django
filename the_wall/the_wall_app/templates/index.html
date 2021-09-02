@@ -12,16 +12,43 @@
     <div class="text-end"><button type="submit" class="btn btn-primary shadow">Post a message</button></div>
 </form>
 <div class="container-fluid mt-4">
-    <div id="" class="row border rounded" style="height: 25rem">
+    <div id="" class="row border rounded overflow-auto" asdstyle="height: 25rem">
         <!-- <div id="" class="col-3"></div> -->
-        <div id="wall" class="text-start fw-bold col-11 overflow-hidden p-3 font-monospace">
+        <div id="wall" class="text-start fw-bold col-11 p-3 font-monospace">
             {% for post in posts %}
             <p>
                 <img src="{{post.user.avatar}}" alt="avatar" class="img-fluid rounded-circle" style="height: 2rem" />
-                <span class="fw-bold text-warning">{{post.author}}</span> <br />
+                <span class="fw-bold text-warning">{{post.user.first_name}} {{post.user.last_name}} - {{post.create_at}}</span> <br />
                 <span class="messages">{{post.message}}</span> <br />
                 <a href="#" class="msg-link link-info">Edit</a> <a href="#" class="link-danger">Delete</a>
             </p>
+            <div class="">
+                {% for comment in post.comments.all %}
+                <div class="list-group ms-5 ps-5">
+                    <p class="bg-secondary bg-gradient d-flex justify-content-between align-items-start">
+                        <p class="me-auto">
+                            <img src="{{post.user.avatar}}" alt="avatar" class="img-fluid rounded-circle" style="height: 2rem" />
+                            <span class="fw-bold text-warning">{{comment.user.first_name}} {{comment.user.last_name}} - {{comment.create_at}} <br></span>
+                            <span class="text-white messages">{{comment.comment}}</span> <br>
+                            <a href="#" class="msg-link link-info">Edit</a> <a href="#" class="link-danger">Delete</a>
+                        </p>
+                        <!-- <span class="badge bg-primary rounded-pill">Aqui poner fecha</span> -->
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+            <form class="form ms-5" method="POST" action="/post_comment">
+                {% csrf_token %}
+                <div class="form-input-group">
+                    <div class="form-floating mt-2 ms-5">
+                        <input type="hidden" name="post_id" value="{{post.id}}" />
+                        <textarea type="text" name="post_comment" id="post_comment" class="ms-2 form-control placeholder bg-secondary" style="height: 3rem" placeholder=" "></textarea>
+                        <label class="ms-3" for="post_comment">Write your comment here...</label>
+                    </div>
+                </div>
+                <br />
+                <div class="text-end"><button type="submit" class="btn btn-primary shadow">Post a message</button></div>
+            </form>
             {% endfor %}
         </div>
         <!-- <div id="" class="col-3"></div> -->
